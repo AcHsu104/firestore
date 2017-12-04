@@ -9,18 +9,18 @@ For more information about Firestore visit [the docs][firestore-docs].
 
   * [Set up your Android app for Cloud Firestore][setup-android]
     * Use the package name `com.google.firebase.example.fireeats`
-  * In the Authentication tab of the Firebase console go to the 
+  * In the Authentication tab of the Firebase console go to the
     [Sign-in Method][auth-providers] page and enable 'Email/Password'.
     * This app uses [FirebaseUI][firebaseui] for authentication.
   * Run the app on an Android device or emulator.
-    
+
 ### Security Rules
 
 Add the following security rules to your project in the:
 [rules tab](https://console.firebase.google.com/project/_/database/firestore/rules):
 
 ```
-service cloud.firestore {  
+service cloud.firestore {
   match /databases/{database}/documents {
     // Anyone can read a restaurant, only authorized
     // users can create, update, or delete them.
@@ -28,7 +28,7 @@ service cloud.firestore {
     	 allow read: if true;
     	 allow create, update, delete: if request.auth.uid != null;
     }
-    
+
     // Anyone can read a rating. Only the user who made the rating
     // can delete it. Ratings can never be updated.
     match /restaurants/{restaurantId}/ratings/{ratingId} {
@@ -48,7 +48,7 @@ service cloud.firestore {
   * When you first open the app it will be empty, choose
     **Add Random Items** from the overflow menu to add some
     new entries.
-    
+
 ### Result
 
 <img src="./docs/home.png" height="534" width="300"/>
