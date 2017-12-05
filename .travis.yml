@@ -27,7 +27,17 @@ android:
   - extra-android-support
   - extra-google-google_play_services
   - extra-google-m2repository
-script: 
+before_script:
+- npm install -g firebase-tools  //要讓 Travis CI 自動部署，要安裝 firebase-tools
+script:
+- ./gradlew assembleDebug
+after_script:
+- firebase deploy --token $FIREBASE_TOKEN --non-interactive  //部署後要進行上傳(解釋)
 before_install:
-- openssl aes-256-cbc -K $encrypted_e2541e0fc760_key -iv $encrypted_e2541e0fc760_iv
-  -in google-services.json.enc -out google-services.json -d
+  - chmod +x gradlew
+  - touch ~/.android/repositories.cfg
+  - export TZ=Asia/Taipei
+  - openssl aes-256-cbc -K $encrypted_e2541e0fc760_key -iv $encrypted_e2541e0fc760_iv -in google-services.json.enc -out google-services.json -d
+env:
+  global:
+    secure: fVfFAiBxecoLNJgxWK+jSE6+RszYcxwD83w2lspowbtXaT1XBQ0mKqDzfneSBahwQJMBs/LDoNONsJ7oP7jeSojkXappa+zaO+7pNukOw9sE8JMA52aF5Or1F0senvSKai0g51RaZoGNw2V4boHBq0ag9c+tb/CgqxnoTyVfFln50z3gPA3FLP4cFVgyTPqpXyYWZ1HxfBf8kBFOGShIBgKWhe3vViqqppM5zJglyrqmRiyZffn9eB+tWU1xgS8R7Q6JvobLR4XAFC/rD4xOsY5fwhOP4nWDNfJBrEUWWLeWEhqbSl3e8BFWaAdaHD3+85roU4QnrLkqSkdVCCUNNHu57pFSgEatVKJz3zPSL+W0Nwl3gc6WZ0lo+xF+Omkm9rlVwz0G6P8FNGMKaaIe7k4Z9VPM6G/RN2cEIBtbiizMXsdzgBIs9MsXb52d37xjgYHxEfeuVjFtt7Jbq+Q5Cet4K5xJNjjnn5pM+OKTm7/wPx0sE10rDedYF2U3Kp/NP/rWLdYO37eUEXY4MBAX3N4/o8sh+UrX6+uEJALp7htMp5OojfErCLpvtPVHk+waSE1XiuBd7nvN+10DqXf9zC73xXa2Fuq/T7OVYPwXyDb6HV4TDnRSsDTinOS/aPLUGvtfY6RXGPnGwfpc+442T1CKrjTZmqB2whCGD/eqoCg=
