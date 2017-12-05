@@ -1,8 +1,6 @@
 language: android
 jdk:
 - oraclejdk8
-#sudo: false
-#dist: precise
 branches:
   only:
   - master
@@ -10,8 +8,8 @@ branches:
   - staging
   - hotfix
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - $HOME/.gradle/caches/
@@ -27,17 +25,19 @@ android:
   - extra-android-support
   - extra-google-google_play_services
   - extra-google-m2repository
-before_script:
-  - npm install -g firebase-tools
 script:
-  - ./gradlew assembleDebug
-after_script:
-  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
+- ./gradlew assembleDebug
+before_deploy: "echo 'ready?'"
+after_deploy: "echo 'after_deploy'"
 before_install:
-  - chmod +x gradlew
-  - touch ~/.android/repositories.cfg
-  - export TZ=Asia/Taipei
-  - openssl aes-256-cbc -K $encrypted_e2541e0fc760_key -iv $encrypted_e2541e0fc760_iv -in ./app/google-services.json.enc -out ./app/google-services.json -d
-env:
-  global:
-    secure: fVfFAiBxecoLNJgxWK+jSE6+RszYcxwD83w2lspowbtXaT1XBQ0mKqDzfneSBahwQJMBs/LDoNONsJ7oP7jeSojkXappa+zaO+7pNukOw9sE8JMA52aF5Or1F0senvSKai0g51RaZoGNw2V4boHBq0ag9c+tb/CgqxnoTyVfFln50z3gPA3FLP4cFVgyTPqpXyYWZ1HxfBf8kBFOGShIBgKWhe3vViqqppM5zJglyrqmRiyZffn9eB+tWU1xgS8R7Q6JvobLR4XAFC/rD4xOsY5fwhOP4nWDNfJBrEUWWLeWEhqbSl3e8BFWaAdaHD3+85roU4QnrLkqSkdVCCUNNHu57pFSgEatVKJz3zPSL+W0Nwl3gc6WZ0lo+xF+Omkm9rlVwz0G6P8FNGMKaaIe7k4Z9VPM6G/RN2cEIBtbiizMXsdzgBIs9MsXb52d37xjgYHxEfeuVjFtt7Jbq+Q5Cet4K5xJNjjnn5pM+OKTm7/wPx0sE10rDedYF2U3Kp/NP/rWLdYO37eUEXY4MBAX3N4/o8sh+UrX6+uEJALp7htMp5OojfErCLpvtPVHk+waSE1XiuBd7nvN+10DqXf9zC73xXa2Fuq/T7OVYPwXyDb6HV4TDnRSsDTinOS/aPLUGvtfY6RXGPnGwfpc+442T1CKrjTZmqB2whCGD/eqoCg=
+- chmod +x gradlew
+- touch ~/.android/repositories.cfg
+- export TZ=Asia/Taipei
+- openssl aes-256-cbc -K $encrypted_e2541e0fc760_key -iv $encrypted_e2541e0fc760_iv -in ./app/google-services.json.enc -out ./app/google-services.json -d
+deploy:
+  provider: firebase
+  token:
+    secure: "Ld1THX9vew2x147rucsU4AvXzaeFWNWT9eOR7FO1PjiFnutyYTQfCae/OVe+pDTwXdqJP4myGsQ6FsCbaDuPsMbL7ovsPRGRAA6wgR5Xi2GssYD6E3H6vUfd7hg4XEbHV3G4jgGD1cPiPbXf+wZaMPaWghFtFi/7i3zv/9PKrB/0N4p0Eu8VOp4V6WmseWQCMS1kJkWohhgxphaPDkcE9XR0nIv0gxcUP+HtBQyongeeI9XJZ8FJwZJJrdus5X4aMDfXnCLnLhzNRVpqveyXM13tGwm/BsDptFXU7CEX9ET3kH/H5LqeaDK+XleNWhTIKQmAP4qCmFnoWnkVDBp+g0FkJn5FQhCXX9KeIapjs3l4Q4qhLix9KlO5096GM0l/mixB/Dn0T22ERs/ujL2CpfmN/X8xibqXIvgdiA093gK7CD63eL8ZOZrojYtHB8z/TY2yw4WeP8pkMevLG0Mqiok0/LE4qjlYkT8DuSIceyC8mv/plYkd0wBA9J3J/J2hftH0kSVU0xKU2jWyT3fFieMu01VjBSd0yp1py7NgQXPNeP1O0L2RKarEz2yp9V6oBVf8NNYpjS2GrGFuQ3pJiyKHg3WtxirZkzvU3ULrW7eGdVvbjgmKTMnZtLxl3lHTMbWo9kM5WEex+FXPt1HbIqLVCH7SQiBIQAzzEtO2Qrg="
+  project: "firestore"
+  message: "your message"
+
