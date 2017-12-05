@@ -28,11 +28,11 @@ android:
   - extra-google-google_play_services
   - extra-google-m2repository
 before_script:
-- npm install -g firebase-tools  //要讓 Travis CI 自動部署，要安裝 firebase-tools
+- npm install -g firebase-tools
 script:
 - ./gradlew assembleDebug
 after_script:
-- firebase deploy --token $FIREBASE_TOKEN --non-interactive  //部署後要進行上傳(解釋)
+- firebase deploy --token $FIREBASE_TOKEN --non-interactive
 before_install:
   - chmod +x gradlew
   - touch ~/.android/repositories.cfg
