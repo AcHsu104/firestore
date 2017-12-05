@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AcHsu104/firestore.svg?branch=master)](https://travis-ci.org/AcHsu104/firestore)
+
 # Cloud Firestore Quickstart
 
 ## Introduction
